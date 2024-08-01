@@ -13,7 +13,6 @@ def post_list(request):
     }
     return render(request,template_name, context)
 
-
 def post_create(request):
     if request.method =='POST':
         form = PostsForm(request.POST, request.FILES)
@@ -37,7 +36,6 @@ def post_detail(request, id):
 
     return render(request, template_name, context)
 
-
 def post_update(request, id):
     post = get_object_or_404(Posts, id=id)
     form = PostsForm(request.POST or None, request.FILES or None, instance=post)
@@ -47,5 +45,11 @@ def post_update(request, id):
         messages.success(request, 'O post foi atualizado com sucesso')
         return HttpResponseRedirect(reverse('post-detail', args=[post.id]))
     return render(request, 'post-form.html', {"form": form})
+
 def post_delete(request, id):
-    pass
+    if request.method == 'POST':
+        post = Posts.objects.get(id=id)
+        post.delete()
+        messages.success(request, 'O post foi deletado com sucesso')
+        return HttpResponseRedirect(reverse('post-list'))
+    return render(request, 'post-delete.html') # retorna rota post-list

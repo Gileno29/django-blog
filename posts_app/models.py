@@ -9,4 +9,12 @@ class Posts(models.Model):
     create_at = models.DateTimeField(auto_now_add=True)
 
 
+    def __str__(self):
+        return self.title
 
+
+
+    class Meta:
+        verbose_name = 'Post'
+        verbose_name_plural='Posts'
+        ordering = ['id']

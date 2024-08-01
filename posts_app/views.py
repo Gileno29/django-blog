@@ -1,4 +1,4 @@
-from django.shortcuts import render, HttpResponseRedirect
+from django.shortcuts import render, HttpResponseRedirect, get_object_or_404
 from posts_app.models import Posts
 from posts_app.forms import PostsForm
 from django.urls import reverse
@@ -39,7 +39,13 @@ def post_detail(request, id):
 
 
 def post_update(request, id):
-    pass
+    post = get_object_or_404(Posts, id=id)
+    form = PostsForm(request.POST or None, request.FILES or None, instance=post)
+    if form.is_valid():
+        form.save()
 
+        messages.success(request, 'O post foi atualizado com sucesso')
+        return HttpResponseRedirect(reverse('post-detail', args=[post.id]))
+    return render(request, 'post-form.html', {"form": form})
 def post_delete(request, id):
     pass

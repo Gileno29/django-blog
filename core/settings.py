@@ -123,10 +123,29 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/5.0/howto/static-files/
 
 
-TEMPLATE_DIR = os.path.join(BASE_DIR, 'templates')
+#TEMPLATE_DIR = os.path.join(BASE_DIR, 'templates')
+
+
+TEMPLATES = [
+    {
+        'BACKEND': 'django.template.backends.django.DjangoTemplates',
+        'DIRS': [BASE_DIR / 'templates'],
+        'APP_DIRS': True,
+        'OPTIONS': {
+            'context_processors': [
+                'django.template.context_processors.debug',
+                'django.template.context_processors.request',
+                'django.contrib.auth.context_processors.auth',
+                'django.contrib.messages.context_processors.messages',
+            ],
+        },
+    },
+]
 STATIC_DIR=os.path.join(BASE_DIR, 'static')
 
-STATIC_ROOT= os.path.join(BASE_DIR, 'static')
+#STATICFILES_DIRS = [BASE_DIR / 'static']
+
+#STATIC_ROOT= os.path.join(BASE_DIR, 'staticfiles')
 STATIC_URL = '/static/'
 
 MEDIA_ROOT =os.path.join(BASE_DIR,'media')
